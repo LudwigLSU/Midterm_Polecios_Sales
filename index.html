@@ -49,6 +49,24 @@
             transform: translateY(0);
             opacity: 1;
         }
+        .star-rating input[type="radio"] {
+            display: none;
+        }
+        .star-rating label {
+            cursor: pointer;
+            color: #475569;
+            transition: color 0.15s ease-in-out;
+        }
+        .star-rating label:hover,
+        .star-rating label:hover ~ label,
+        .star-rating input[type="radio"]:checked ~ label {
+            color: #f59e0b;
+        }
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+        }
     </style>
 </head>
 <body class="font-sans bg-slate-900 text-slate-100 antialiased selection:bg-brand-500 selection:text-white">
@@ -67,7 +85,7 @@
             
             <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
                 <a href="#features" class="hover:text-white transition-colors">Features</a>
-                <a href="#testimonials" class="hover:text-white transition-colors">Testimonials</a>
+                <a href="#reviews" class="hover:text-white transition-colors">Reviews</a>
                 <a href="#pricing" class="hover:text-white transition-colors">Pricing</a>
                 <a href="#faq" class="hover:text-white transition-colors">FAQ</a>
             </div>
@@ -322,6 +340,198 @@
         </div>
     </section>
 
+    <!-- Customer Feedback & Reviews Section -->
+    <section id="reviews" class="py-20 border-t border-slate-800 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Section Header & Rating Breakdown Summary -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-slate-800">
+                <div>
+                    <h2 class="text-xs font-bold uppercase tracking-widest text-brand-400">Community Feedback</h2>
+                    <p class="mt-2 text-3xl sm:text-4xl font-extrabold text-white">What Founders & Developers Say</p>
+                    <p class="mt-2 text-slate-400 text-sm sm:text-base">Real experiences from creators who launched with SaaSify Pro.</p>
+                </div>
+
+                <!-- Rating Stats Summary Card -->
+                <div class="flex items-center space-x-4 bg-slate-800/80 p-4 rounded-2xl border border-slate-700/60 shadow-xl self-start md:self-auto">
+                    <div class="text-center px-2">
+                        <span id="avg-rating-value" class="text-4xl font-extrabold text-white">4.9</span>
+                        <span class="text-slate-400 text-xs block mt-0.5">out of 5.0</span>
+                    </div>
+                    <div class="border-l border-slate-700 h-10"></div>
+                    <div>
+                        <div class="flex text-amber-400 text-sm space-x-1">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <span id="total-reviews-count" class="text-xs font-medium text-slate-300 mt-1 block">Based on 128 verified reviews</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter Tabs & Write Review Toggle CTA -->
+            <div class="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+                <!-- Filters -->
+                <div class="flex items-center space-x-2 bg-slate-900 p-1.5 rounded-xl border border-slate-800 text-xs font-medium self-start">
+                    <button onclick="filterReviews('all')" id="filter-all" class="px-4 py-2 rounded-lg bg-brand-600 text-white transition-colors">All Reviews</button>
+                    <button onclick="filterReviews('5star')" id="filter-5star" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white transition-colors">5 Stars Only</button>
+                    <button onclick="filterReviews('verified')" id="filter-verified" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white transition-colors">Verified Buyers</button>
+                </div>
+
+                <!-- Open Form Button -->
+                <button onclick="toggleFeedbackForm()" class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-all flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-pen-to-square text-brand-400"></i>
+                    <span>Leave a Review</span>
+                </button>
+            </div>
+
+            <!-- Customer Feedback Form Drawer / Container -->
+            <div id="feedback-form-container" class="hidden mt-8 bg-slate-950/90 border border-brand-500/40 rounded-2xl p-6 sm:p-8 shadow-2xl relative">
+                <div class="flex justify-between items-center pb-4 mb-6 border-b border-slate-800">
+                    <div>
+                        <h3 class="text-lg font-bold text-white">Write a Customer Review</h3>
+                        <p class="text-xs text-slate-400">Share your experience with SaaSify Pro to help other builders.</p>
+                    </div>
+                    <button onclick="toggleFeedbackForm()" class="text-slate-400 hover:text-white text-lg px-2">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <form id="feedback-form" onsubmit="handleReviewSubmit(event)" class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <!-- Full Name -->
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-slate-300 mb-2">Your Name *</label>
+                            <input type="text" id="review-author" required placeholder="e.g. Sarah Jenkins" class="w-full bg-slate-900 border border-slate-700/80 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-500">
+                        </div>
+                        <!-- Role / Company -->
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-slate-300 mb-2">Role & Company *</label>
+                            <input type="text" id="review-role" required placeholder="e.g. Founder at DevLaunch" class="w-full bg-slate-900 border border-slate-700/80 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-500">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 items-center">
+                        <!-- Star Rating Selection -->
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-slate-300 mb-2">Rating *</label>
+                            <div class="star-rating bg-slate-900 border border-slate-700/80 rounded-xl px-4 py-2.5 inline-flex items-center space-x-2 space-x-reverse">
+                                <input type="radio" id="star5" name="rating" value="5" checked /><label for="star5" title="5 stars"><i class="fa-solid fa-star"></i></label>
+                                <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 stars"><i class="fa-solid fa-star"></i></label>
+                                <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 stars"><i class="fa-solid fa-star"></i></label>
+                                <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 stars"><i class="fa-solid fa-star"></i></label>
+                                <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star"><i class="fa-solid fa-star"></i></label>
+                            </div>
+                        </div>
+                        <!-- Review Title -->
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-slate-300 mb-2">Review Headline *</label>
+                            <input type="text" id="review-title" required placeholder="e.g. Saved me 3 weeks of setup!" class="w-full bg-slate-900 border border-slate-700/80 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-500">
+                        </div>
+                    </div>
+
+                    <!-- Review Content -->
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-300 mb-2">Feedback & Details *</label>
+                        <textarea id="review-text" rows="4" required placeholder="Tell us how SaaSify Pro helped your workflow or product launch..." class="w-full bg-slate-900 border border-slate-700/80 rounded-xl p-4 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-500"></textarea>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" onclick="toggleFeedbackForm()" class="px-5 py-3 rounded-xl text-sm font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors">Cancel</button>
+                        <button type="submit" class="px-6 py-3 rounded-xl text-sm font-bold bg-brand-600 hover:bg-brand-500 text-white shadow-lg shadow-brand-500/20 transition-all">Submit Review</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Testimonials Grid -->
+            <div id="reviews-grid" class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Initial Mock Testimonial 1 -->
+                <div class="review-card bg-slate-900/90 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between shadow-lg" data-rating="5" data-verified="true">
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex text-amber-400 text-xs space-x-1">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <span class="text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-full flex items-center gap-1">
+                                <i class="fa-solid fa-circle-check"></i> Verified Buyer
+                            </span>
+                        </div>
+                        <h4 class="text-white font-bold text-base mt-3">Launched my AI SaaS in 48 hours</h4>
+                        <p class="text-slate-400 text-sm mt-2 leading-relaxed">
+                            "The Stripe webhooks and authentication were literally plug-and-play. I saved hundreds of hours I would've wasted configuring boilerplate code."
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center space-x-3">
+                        <div class="w-9 h-9 rounded-full bg-brand-600/30 text-brand-400 border border-brand-500/30 flex items-center justify-center font-bold text-sm">
+                            DL
+                        </div>
+                        <div>
+                            <span class="block text-xs font-bold text-white">David Lin</span>
+                            <span class="block text-[11px] text-slate-500">Founder @ PromptWave</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Initial Mock Testimonial 2 -->
+                <div class="review-card bg-slate-900/90 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between shadow-lg" data-rating="5" data-verified="true">
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex text-amber-400 text-xs space-x-1">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <span class="text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-full flex items-center gap-1">
+                                <i class="fa-solid fa-circle-check"></i> Verified Buyer
+                            </span>
+                        </div>
+                        <h4 class="text-white font-bold text-base mt-3">Best $119 spent on code</h4>
+                        <p class="text-slate-400 text-sm mt-2 leading-relaxed">
+                            "Clean Next.js architecture and TypeScript models. Made scaling our multi-tenant dashboard effortless for client projects."
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center space-x-3">
+                        <div class="w-9 h-9 rounded-full bg-purple-600/30 text-purple-400 border border-purple-500/30 flex items-center justify-center font-bold text-sm">
+                            EM
+                        </div>
+                        <div>
+                            <span class="block text-xs font-bold text-white">Elena Miller</span>
+                            <span class="block text-[11px] text-slate-500">CTO @ PixelScale</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Initial Mock Testimonial 3 -->
+                <div class="review-card bg-slate-900/90 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between shadow-lg" data-rating="4" data-verified="false">
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex text-amber-400 text-xs space-x-1">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star text-slate-600"></i>
+                            </div>
+                            <span class="text-[10px] font-semibold bg-slate-800 text-slate-400 px-2 py-0.5 rounded-full">Community Member</span>
+                        </div>
+                        <h4 class="text-white font-bold text-base mt-3">Great foundation for startups</h4>
+                        <p class="text-slate-400 text-sm mt-2 leading-relaxed">
+                            "Super organized folder structure and detailed documentation. Excited to see what future updates bring!"
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center space-x-3">
+                        <div class="w-9 h-9 rounded-full bg-indigo-600/30 text-indigo-400 border border-indigo-500/30 flex items-center justify-center font-bold text-sm">
+                            MR
+                        </div>
+                        <div>
+                            <span class="block text-xs font-bold text-white">Marcus Reed</span>
+                            <span class="block text-[11px] text-slate-500">Indie Hacker</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
     <!-- FAQ Section -->
     <section id="faq" class="py-20">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -396,6 +606,131 @@
     <script>
         // Dynamic Year Setting
         document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Feedback Form Display Toggle
+        function toggleFeedbackForm() {
+            const container = document.getElementById('feedback-form-container');
+            container.classList.toggle('hidden');
+            if(!container.classList.contains('hidden')) {
+                container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        // Review Filter Handler
+        function filterReviews(type) {
+            const cards = document.querySelectorAll('.review-card');
+            const buttons = {
+                all: document.getElementById('filter-all'),
+                '5star': document.getElementById('filter-5star'),
+                verified: document.getElementById('filter-verified')
+            };
+
+            // Update active tab style
+            Object.keys(buttons).forEach(key => {
+                if(key === type) {
+                    buttons[key].className = "px-4 py-2 rounded-lg bg-brand-600 text-white transition-colors";
+                } else {
+                    buttons[key].className = "px-4 py-2 rounded-lg text-slate-400 hover:text-white transition-colors";
+                }
+            });
+
+            // Filter cards visibility
+            cards.forEach(card => {
+                if (type === 'all') {
+                    card.style.display = 'flex';
+                } else if (type === '5star') {
+                    card.style.display = card.getAttribute('data-rating') === '5' ? 'flex' : 'none';
+                } else if (type === 'verified') {
+                    card.style.display = card.getAttribute('data-verified') === 'true' ? 'flex' : 'none';
+                }
+            });
+        }
+
+        // Handle Form Submission
+        function handleReviewSubmit(event) {
+            event.preventDefault();
+
+            const author = document.getElementById('review-author').value.trim();
+            const role = document.getElementById('review-role').value.trim();
+            const title = document.getElementById('review-title').value.trim();
+            const text = document.getElementById('review-text').value.trim();
+            const ratingInput = document.querySelector('input[name="rating"]:checked');
+            const rating = ratingInput ? ratingInput.value : "5";
+
+            // Initials for avatar
+            const initials = author.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || "U";
+
+            // Generate Star HTML
+            let starsHtml = '';
+            for(let i = 1; i <= 5; i++) {
+                if(i <= parseInt(rating)) {
+                    starsHtml += `<i class="fa-solid fa-star"></i>`;
+                } else {
+                    starsHtml += `<i class="fa-regular fa-star text-slate-600"></i>`;
+                }
+            }
+
+            // Create New Review Card Element
+            const newCard = document.createElement('div');
+            newCard.className = 'review-card bg-slate-900/90 border border-brand-500/30 rounded-2xl p-6 flex flex-col justify-between shadow-lg animate-pulse';
+            newCard.setAttribute('data-rating', rating);
+            newCard.setAttribute('data-verified', 'true');
+
+            newCard.innerHTML = `
+                <div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex text-amber-400 text-xs space-x-1">
+                            ${starsHtml}
+                        </div>
+                        <span class="text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-full flex items-center gap-1">
+                            <i class="fa-solid fa-circle-check"></i> Verified Buyer
+                        </span>
+                    </div>
+                    <h4 class="text-white font-bold text-base mt-3">${escapeHtml(title)}</h4>
+                    <p class="text-slate-400 text-sm mt-2 leading-relaxed">
+                        "${escapeHtml(text)}"
+                    </p>
+                </div>
+                <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center space-x-3">
+                    <div class="w-9 h-9 rounded-full bg-brand-600/30 text-brand-400 border border-brand-500/30 flex items-center justify-center font-bold text-sm">
+                        ${initials}
+                    </div>
+                    <div>
+                        <span class="block text-xs font-bold text-white">${escapeHtml(author)}</span>
+                        <span class="block text-[11px] text-slate-500">${escapeHtml(role)}</span>
+                    </div>
+                </div>
+            `;
+
+            // Prepend new card to Grid
+            const grid = document.getElementById('reviews-grid');
+            grid.insertBefore(newCard, grid.firstChild);
+
+            // Remove pulse animation after brief delay
+            setTimeout(() => {
+                newCard.classList.remove('animate-pulse');
+            }, 1000);
+
+            // Reset and close form
+            document.getElementById('feedback-form').reset();
+            toggleFeedbackForm();
+
+            // Show Toast Confirmation
+            showToast("Thank you! Your review has been published.");
+        }
+
+        // Helper to escape HTML to prevent XSS
+        function escapeHtml(str) {
+            return str.replace(/[&<>"']/g, function(m) {
+                return {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#039;'
+                }[m];
+            });
+        }
 
         // Discount Applied State
         let discountActive = true;
