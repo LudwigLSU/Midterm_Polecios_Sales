@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaaSify Pro - Launch Your SaaS in Days</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .toast {
+            transform: translateY(100%);
+            opacity: 0;
+            transition: all 0.3s ease-in-out;
+        }
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="font-sans bg-slate-900 text-slate-100 antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- Navigation Header -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center font-bold text-xl shadow-lg shadow-brand-500/30">
+                    S
+                </div>
+                <span class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
+                    SaaSify<span class="text-brand-500">Pro</span>
+                </span>
+            </div>
+            
+            <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
+                <a href="#features" class="hover:text-white transition-colors">Features</a>
+                <a href="#testimonials" class="hover:text-white transition-colors">Testimonials</a>
+                <a href="#pricing" class="hover:text-white transition-colors">Pricing</a>
+                <a href="#faq" class="hover:text-white transition-colors">FAQ</a>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <a href="#pricing" class="px-5 py-2.5 rounded-lg text-sm font-semibold bg-brand-600 hover:bg-brand-500 text-white shadow-lg shadow-brand-500/25 transition-all hover:scale-105 active:scale-95">
+                    Get Started
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-brand-900/40 via-slate-900 to-slate-900 -z-10"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            
+            <!-- Badge -->
+            <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full border border-brand-500/30 bg-brand-500/10 text-brand-300 text-xs sm:text-sm font-medium mb-8 backdrop-blur-sm animate-pulse">
+                <span class="flex h-2 w-2 rounded-full bg-brand-400"></span>
+                <span>Version 3.0 Released • Next.js & Tailwind Ready</span>
+            </div>
+
+            <!-- Headline -->
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight max-w-4xl mx-auto leading-tight sm:leading-none">
+                Build & Launch Your SaaS Product 
+                <span class="bg-gradient-to-r from-brand-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">In Days, Not Months</span>
+            </h1>
+
+            <!-- Subheadline -->
+            <p class="mt-6 text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto font-normal leading-relaxed">
+                The ultimate production-ready starter kit equipped with Authentication, Stripe Billing, Database ORM, and Automated Email Workflows out of the box.
+            </p>
+
+            <!-- Call to Action Buttons -->
+            <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#pricing" class="w-full sm:w-auto px-8 py-4 rounded-xl font-bold bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white shadow-xl shadow-brand-500/30 transition-all transform hover:-translate-y-0.5 active:translate-y-0 text-center">
+                    Get SaaSify Pro Now <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
+                </a>
+                <button onclick="copyInstallCode()" class="w-full sm:w-auto px-6 py-4 rounded-xl font-mono text-sm bg-slate-800 hover:bg-slate-700/80 border border-slate-700 text-slate-300 flex items-center justify-center space-x-3 transition-colors">
+                    <span class="text-brand-400">$</span>
+                    <span>npx create-saasify-app@latest</span>
+                    <i class="fa-regular fa-copy text-slate-400"></i>
+                </button>
+            </div>
+
+            <!-- Product Showcase Card -->
+            <div class="mt-16 relative max-w-5xl mx-auto">
+                <div class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-brand-500 to-indigo-500 opacity-20 blur-xl"></div>
+                <div class="relative rounded-2xl bg-slate-800/90 border border-slate-700 shadow-2xl overflow-hidden backdrop-blur-xl">
+                    <!-- App Top Bar -->
+                    <div class="flex items-center justify-between px-4 py-3 bg-slate-900/80 border-b border-slate-700/60">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
+                            <span class="w-3 h-3 rounded-full bg-yellow-500/80 inline-block"></span>
+                            <span class="w-3 h-3 rounded-full bg-green-500/80 inline-block"></span>
+                        </div>
+                        <span class="text-xs font-mono text-slate-400">dashboard.saasifypro.dev</span>
+                        <div class="w-12"></div>
+                    </div>
+                    <!-- Mock Dashboard Content -->
+                    <div class="p-6 md:p-8 grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+                        <div class="bg-slate-900/50 p-5 rounded-xl border border-slate-700/40">
+                            <div class="flex justify-between items-center text-slate-400 text-sm">
+                                <span>Monthly Revenue</span>
+                                <i class="fa-solid fa-arrow-trend-up text-emerald-400"></i>
+                            </div>
+                            <div class="text-3xl font-bold mt-2 text-white">$42,850</div>
+                            <div class="text-xs text-emerald-400 mt-1">+18.4% from last month</div>
+                        </div>
+                        <div class="bg-slate-900/50 p-5 rounded-xl border border-slate-700/40">
+                            <div class="flex justify-between items-center text-slate-400 text-sm">
+                                <span>Active Subscribers</span>
+                                <i class="fa-solid fa-users text-brand-400"></i>
+                            </div>
+                            <div class="text-3xl font-bold mt-2 text-white">1,429</div>
+                            <div class="text-xs text-brand-400 mt-1">+120 new this week</div>
+                        </div>
+                        <div class="bg-slate-900/50 p-5 rounded-xl border border-slate-700/40">
+                            <div class="flex justify-between items-center text-slate-400 text-sm">
+                                <span>Conversion Rate</span>
+                                <i class="fa-solid fa-bolt text-purple-400"></i>
+                            </div>
+                            <div class="text-3xl font-bold mt-2 text-white">4.85%</div>
+                            <div class="text-xs text-purple-400 mt-1">+0.6% optimization</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Proof Logos -->
+            <div class="mt-16 border-t border-slate-800/80 pt-10">
+                <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Trusted by 2,000+ Developers & Founders Worldwide</p>
+                <div class="mt-6 flex flex-wrap items-center justify-center gap-8 md:gap-16 opacity-50 grayscale hover:grayscale-0 transition-all duration-300">
+                    <span class="font-extrabold text-xl text-slate-300"><i class="fa-brands fa-stripe text-2xl"></i> Stripe</span>
+                    <span class="font-extrabold text-xl text-slate-300"><i class="fa-brands fa-github text-2xl"></i> GitHub</span>
+                    <span class="font-extrabold text-xl text-slate-300"><i class="fa-brands fa-aws text-2xl"></i> AWS</span>
+                    <span class="font-extrabold text-xl text-slate-300"><i class="fa-brands fa-react text-2xl"></i> React</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Discount / Limited-Time Offer Banner Section -->
+    <section id="discount" class="py-12 bg-gradient-to-r from-brand-900/60 via-indigo-950/80 to-purple-900/60 border-y border-brand-500/30 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-brand-500/10 via-transparent to-transparent"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="bg-slate-900/80 backdrop-blur-xl border border-brand-500/40 rounded-3xl p-6 sm:p-10 shadow-2xl shadow-brand-500/10">
+                <div class="flex flex-col lg:flex-row items-center justify-between gap-8">
+                    
+                    <!-- Offer Info & Badge -->
+                    <div class="text-center lg:text-left max-w-xl">
+                        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs sm:text-sm font-semibold mb-4">
+                            <i class="fa-solid fa-bolt animate-bounce"></i>
+                            <span>LIMITED TIME EXCLUSIVE OFFER</span>
+                        </div>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                            Save <span class="text-brand-400">40% OFF</span> SaaSify Pro Today!
+                        </h2>
+                        <p class="mt-3 text-slate-300 text-sm sm:text-base leading-relaxed">
+                            Use coupon code <span class="font-mono bg-slate-800 px-2 py-0.5 rounded text-amber-300 font-bold border border-amber-500/30">LAUNCH40</span> at checkout or click below to automatically apply your 40% discount on all plans.
+                        </p>
+                        
+                        <!-- Coupon Box -->
+                        <div class="mt-6 flex flex-col sm:flex-row items-center gap-3">
+                            <div class="w-full sm:w-auto flex items-center bg-slate-950 border border-slate-700/80 rounded-xl px-4 py-3 justify-between font-mono text-sm">
+                                <div class="flex items-center space-x-2">
+                                    <i class="fa-solid fa-ticket text-brand-400"></i>
+                                    <span class="text-slate-200 font-bold tracking-wider">LAUNCH40</span>
+                                </div>
+                                <span class="text-xs text-emerald-400 font-semibold ml-4 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">40% OFF</span>
+                            </div>
+                            <button onclick="copyCouponCode('LAUNCH40')" class="w-full sm:w-auto px-5 py-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-semibold text-sm transition-all shadow-lg shadow-brand-500/20 flex items-center justify-center space-x-2">
+                                <i class="fa-regular fa-copy"></i>
+                                <span>Copy Code</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Countdown Timer Box -->
+                    <div class="flex flex-col items-center justify-center bg-slate-950/70 border border-slate-800 p-6 sm:p-8 rounded-2xl w-full lg:w-auto text-center min-w-[300px]">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Offer Expires In</span>
+                        
+                        <!-- Timer Grid -->
+                        <div class="grid grid-cols-4 gap-2 sm:gap-3 text-center">
+                            <div class="bg-slate-900 border border-slate-800 rounded-xl p-2.5 sm:p-3 min-w-[60px]">
+                                <span id="timer-hours" class="block text-2xl sm:text-3xl font-extrabold text-white font-mono">04</span>
+                                <span class="text-[10px] text-slate-400 uppercase font-semibold">Hours</span>
+                            </div>
+                            <div class="bg-slate-900 border border-slate-800 rounded-xl p-2.5 sm:p-3 min-w-[60px]">
+                                <span id="timer-minutes" class="block text-2xl sm:text-3xl font-extrabold text-white font-mono">18</span>
+                                <span class="text-[10px] text-slate-400 uppercase font-semibold">Mins</span>
+                            </div>
+                            <div class="bg-slate-900 border border-slate-800 rounded-xl p-2.5 sm:p-3 min-w-[60px]">
+                                <span id="timer-seconds" class="block text-2xl sm:text-3xl font-extrabold text-white font-mono">42</span>
+                                <span class="text-[10px] text-slate-400 uppercase font-semibold">Secs</span>
+                            </div>
+                            <div class="bg-slate-900 border border-slate-800 rounded-xl p-2.5 sm:p-3 min-w-[60px]">
+                                <span id="timer-ms" class="block text-2xl sm:text-3xl font-extrabold text-brand-400 font-mono">85</span>
+                                <span class="text-[10px] text-slate-400 uppercase font-semibold">MS</span>
+                            </div>
+                        </div>
+
+                        <!-- CTA Button -->
+                        <button onclick="applyDiscountAndScroll()" class="mt-6 w-full py-3.5 px-6 rounded-xl font-bold bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 shadow-lg shadow-amber-500/20 transition-all transform hover:-translate-y-0.5 text-sm flex items-center justify-center space-x-2">
+                            <span>Claim Discount Now</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20 bg-slate-950/50 border-t border-slate-800/50 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto">
+                <h2 class="text-xs font-bold uppercase tracking-widest text-brand-400">Simple Pricing</h2>
+                <p class="mt-2 text-3xl sm:text-4xl font-extrabold text-white">Pay Once, Build Forever</p>
+                <p class="mt-4 text-slate-400">Choose the license that fits your goals. No subscription fees.</p>
+
+                <!-- Discount Banner Alert inside Pricing -->
+                <div id="pricing-discount-badge" class="mt-6 inline-flex items-center space-x-2 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full animate-pulse">
+                    <i class="fa-solid fa-tag"></i>
+                    <span id="discount-status-text">Coupon LAUNCH40 Available - 40% Off Applied Automatically</span>
+                </div>
+
+                <!-- Billing Toggle -->
+                <div class="mt-8 flex items-center justify-center space-x-4">
+                    <span class="text-sm font-medium text-slate-300" id="billing-standard-label">Standard License</span>
+                    <button id="billing-toggle" onclick="toggleBilling()" class="w-14 h-8 bg-slate-800 rounded-full p-1 border border-slate-700 relative transition-colors focus:outline-none">
+                        <div id="toggle-circle" class="w-6 h-6 bg-brand-500 rounded-full transition-transform transform translate-x-0"></div>
+                    </button>
+                    <span class="text-sm font-medium text-slate-400" id="billing-extended-label">
+                        Unlimited Agency <span class="text-xs text-brand-400 font-bold bg-brand-500/10 px-2 py-0.5 rounded-full border border-brand-500/20">SAVE 20%</span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto gap-8">
+                <!-- Starter Tier -->
+                <div class="bg-slate-900/90 rounded-2xl border border-slate-800 p-8 flex flex-col justify-between relative">
+                    <div>
+                        <h3 class="text-lg font-bold text-white">Starter Kit</h3>
+                        <p class="text-sm text-slate-400 mt-1">Perfect for single side projects & solo founders.</p>
+                        <div class="mt-6 flex items-baseline">
+                            <span id="price-starter" class="text-4xl font-extrabold text-white price-value" data-standard-original="$99" data-standard-discount="$59" data-extended-original="$199" data-extended-discount="$119">$59</span>
+                            <span id="starter-original-price" class="text-slate-500 text-lg line-through ml-2 font-medium">$99</span>
+                            <span class="text-slate-500 text-sm ml-2">/ lifetime</span>
+                        </div>
+                        <ul class="mt-8 space-y-4 text-sm text-slate-300">
+                            <li class="flex items-center"><i class="fa-solid fa-check text-emerald-400 mr-3"></i> Single Project License</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-emerald-400 mr-3"></i> Next.js 14 App Router Starter</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-emerald-400 mr-3"></i> Stripe Subscription Integration</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-emerald-400 mr-3"></i> Database ORM Setup (Prisma)</li>
+                            <li class="flex items-center text-slate-500"><i class="fa-solid fa-xmark mr-3.5 ml-0.5"></i> Multi-tenant SaaS Architecture</li>
+                        </ul>
+                    </div>
+                    <button onclick="triggerCheckout('Starter Kit')" class="mt-8 w-full py-3.5 px-4 rounded-xl font-bold bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 transition-colors">
+                        Buy Starter Kit
+                    </button>
+                </div>
+
+                <!-- Ultimate Tier -->
+                <div class="bg-gradient-to-b from-slate-900 to-slate-900/95 rounded-2xl border-2 border-brand-500 p-8 flex flex-col justify-between relative shadow-2xl shadow-brand-500/10">
+                    <div class="absolute -top-3.5 right-6 bg-brand-500 text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full shadow-lg">
+                        Most Popular
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white">Unlimited License</h3>
+                        <p class="text-sm text-slate-400 mt-1">For agency owners & serial entrepreneurs.</p>
+                        <div class="mt-6 flex items-baseline">
+                            <span id="price-unlimited" class="text-4xl font-extrabold text-white price-value" data-standard-original="$199" data-standard-discount="$119" data-extended-original="$349" data-extended-discount="$209">$119</span>
+                            <span id="unlimited-original-price" class="text-slate-500 text-lg line-through ml-2 font-medium">$199</span>
+                            <span class="text-slate-500 text-sm ml-2">/ lifetime</span>
+                        </div>
+                        <ul class="mt-8 space-y-4 text-sm text-slate-300">
+                            <li class="flex items-center"><i class="fa-solid fa-check text-emerald-400 mr-3"></i> Unlimited Projects License</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-emerald-400 mr-3"></i> Everything in Starter Kit</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-emerald-400 mr-3"></i> Multi-tenant & Team Roles</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-emerald-400 mr-3"></i> OpenAI & AI API Integration Boilerplate</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-emerald-400 mr-3"></i> Priority Discord Support</li>
+                        </ul>
+                    </div>
+                    <button onclick="triggerCheckout('Unlimited License')" class="mt-8 w-full py-3.5 px-4 rounded-xl font-bold bg-brand-600 hover:bg-brand-500 text-white shadow-lg shadow-brand-500/30 transition-all hover:scale-[1.02]">
+                        Get Unlimited Access
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-xs font-bold uppercase tracking-widest text-brand-400">Got Questions?</h2>
+                <p class="mt-2 text-3xl font-extrabold text-white">Frequently Asked Questions</p>
+            </div>
+
+            <div class="mt-12 space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
+                    <button onclick="toggleAccordion(1)" class="w-full p-6 text-left flex justify-between items-center focus:outline-none">
+                        <span class="font-semibold text-white">What tech stack does SaaSify Pro use?</span>
+                        <i id="acc-icon-1" class="fa-solid fa-chevron-down text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="acc-content-1" class="accordion-content px-6 pb-6 text-sm text-slate-400 leading-relaxed">
+                        SaaSify Pro is built with Next.js (App Router), TypeScript, Tailwind CSS, Prisma ORM, NextAuth, and Stripe SDK. It's clean, modular, and easy to extend.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
+                    <button onclick="toggleAccordion(2)" class="w-full p-6 text-left flex justify-between items-center focus:outline-none">
+                        <span class="font-semibold text-white">Can I get a refund if it doesn't fit my project?</span>
+                        <i id="acc-icon-2" class="fa-solid fa-chevron-down text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="acc-content-2" class="accordion-content px-6 pb-6 text-sm text-slate-400 leading-relaxed">
+                        Yes, we offer a 14-day 100% money-back guarantee. If SaaSify Pro doesn't speed up your development, send us an email and we'll refund your full purchase.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
+                    <button onclick="toggleAccordion(3)" class="w-full p-6 text-left flex justify-between items-center focus:outline-none">
+                        <span class="font-semibold text-white">Do I get access to future updates?</span>
+                        <i id="acc-icon-3" class="fa-solid fa-chevron-down text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="acc-content-3" class="accordion-content px-6 pb-6 text-sm text-slate-400 leading-relaxed">
+                        Absolutely! All licenses include lifetime access to code updates, security fixes, and new features added to the repository.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 bg-slate-950 py-12 text-sm text-slate-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center space-x-3">
+                <div class="w-7 h-7 rounded-lg bg-brand-600 flex items-center justify-center font-bold text-white text-sm">
+                    S
+                </div>
+                <span class="font-bold text-slate-200">SaaSify Pro</span>
+            </div>
+            <div class="flex space-x-6">
+                <a href="#" class="hover:text-slate-300 transition-colors">Terms of Service</a>
+                <a href="#" class="hover:text-slate-300 transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-slate-300 transition-colors">Support</a>
+            </div>
+            <div>
+                &copy; <span id="year"></span> SaaSify Pro Inc. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast fixed bottom-6 right-6 bg-slate-800 border border-slate-700 text-white px-5 py-4 rounded-xl shadow-2xl flex items-center space-x-3 z-50">
+        <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+        <span id="toast-message" class="text-sm font-medium">Action completed successfully!</span>
+    </div>
+
+    <script>
+        // Dynamic Year Setting
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Discount Applied State
+        let discountActive = true;
+        let isExtended = false;
+
+        function updatePricingDisplay() {
+            const starterPrice = document.getElementById('price-starter');
+            const unlimitedPrice = document.getElementById('price-unlimited');
+            const starterOriginal = document.getElementById('starter-original-price');
+            const unlimitedOriginal = document.getElementById('unlimited-original-price');
+
+            if (isExtended) {
+                if (discountActive) {
+                    starterPrice.textContent = starterPrice.getAttribute('data-extended-discount');
+                    starterOriginal.textContent = starterPrice.getAttribute('data-extended-original');
+                    unlimitedPrice.textContent = unlimitedPrice.getAttribute('data-extended-discount');
+                    unlimitedOriginal.textContent = unlimitedPrice.getAttribute('data-extended-original');
+                } else {
+                    starterPrice.textContent = starterPrice.getAttribute('data-extended-original');
+                    starterOriginal.textContent = '';
+                    unlimitedPrice.textContent = unlimitedPrice.getAttribute('data-extended-original');
+                    unlimitedOriginal.textContent = '';
+                }
+            } else {
+                if (discountActive) {
+                    starterPrice.textContent = starterPrice.getAttribute('data-standard-discount');
+                    starterOriginal.textContent = starterPrice.getAttribute('data-standard-original');
+                    unlimitedPrice.textContent = unlimitedPrice.getAttribute('data-standard-discount');
+                    unlimitedOriginal.textContent = unlimitedPrice.getAttribute('data-standard-original');
+                } else {
+                    starterPrice.textContent = starterPrice.getAttribute('data-standard-original');
+                    starterOriginal.textContent = '';
+                    unlimitedPrice.textContent = unlimitedPrice.getAttribute('data-standard-original');
+                    unlimitedOriginal.textContent = '';
+                }
+            }
+        }
+
+        // Billing Toggle Logic
+        function toggleBilling() {
+            isExtended = !isExtended;
+            const circle = document.getElementById('toggle-circle');
+            
+            if (isExtended) {
+                circle.classList.add('translate-x-6');
+            } else {
+                circle.classList.remove('translate-x-6');
+            }
+            updatePricingDisplay();
+        }
+
+        // Copy Coupon Code
+        function copyCouponCode(code) {
+            const dummy = document.createElement("textarea");
+            document.body.appendChild(dummy);
+            dummy.value = code;
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+
+            showToast(`Coupon code ${code} copied to clipboard!`);
+        }
+
+        // Claim discount and smooth scroll
+        function applyDiscountAndScroll() {
+            discountActive = true;
+            updatePricingDisplay();
+            showToast("40% discount applied to pricing plans!");
+            document.getElementById('pricing').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Live Countdown Timer
+        let targetHours = 4;
+        let targetMinutes = 18;
+        let targetSeconds = 42;
+        let targetMs = 99;
+
+        function updateCountdown() {
+            targetMs--;
+            if (targetMs < 0) {
+                targetMs = 99;
+                targetSeconds--;
+                if (targetSeconds < 0) {
+                    targetSeconds = 59;
+                    targetMinutes--;
+                    if (targetMinutes < 0) {
+                        targetMinutes = 59;
+                        targetHours--;
+                        if (targetHours < 0) {
+                            targetHours = 0;
+                            targetMinutes = 0;
+                            targetSeconds = 0;
+                            targetMs = 0;
+                        }
+                    }
+                }
+            }
+
+            document.getElementById('timer-hours').textContent = String(targetHours).padStart(2, '0');
+            document.getElementById('timer-minutes').textContent = String(targetMinutes).padStart(2, '0');
+            document.getElementById('timer-seconds').textContent = String(targetSeconds).padStart(2, '0');
+            document.getElementById('timer-ms').textContent = String(targetMs).padStart(2, '0');
+        }
+
+        setInterval(updateCountdown, 10);
+        updatePricingDisplay();
+
+        // Accordion Logic
+        function toggleAccordion(id) {
+            const content = document.getElementById(`acc-content-${id}`);
+            const icon = document.getElementById(`acc-icon-${id}`);
+            
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                icon.classList.remove('rotate-180');
+            } else {
+                // Close open accordions
+                document.querySelectorAll('.accordion-content').forEach(el => el.style.maxHeight = null);
+                document.querySelectorAll('[id^="acc-icon-"]').forEach(el => el.classList.remove('rotate-180'));
+                
+                content.style.maxHeight = content.scrollHeight + "px";
+                icon.classList.add('rotate-180');
+            }
+        }
+
+        // Toast Trigger
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            const toastIcon = document.getElementById('toast-icon');
+
+            toastMessage.textContent = message;
+            toastIcon.className = isError 
+                ? "fa-solid fa-triangle-exclamation text-rose-400 text-lg" 
+                : "fa-solid fa-circle-check text-emerald-400 text-lg";
+
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Copy Code Functionality
+        function copyInstallCode() {
+            const textToCopy = "npx create-saasify-app@latest";
+            
+            const dummy = document.createElement("textarea");
+            document.body.appendChild(dummy);
+            dummy.value = textToCopy;
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+
+            showToast("Command copied to clipboard!");
+        }
+
+        // Mock Checkout Trigger
+        function triggerCheckout(plan) {
+            const discountMsg = discountActive ? " with 40% discount applied" : "";
+            showToast(`Redirecting to checkout for ${plan}${discountMsg}...`);
+        }
+    </script>
+</body>
+</html>
